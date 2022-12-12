@@ -1,36 +1,33 @@
 # Multi-label-Classification-with-portrait
  
 ## 진행기간 
-- 2022.09.13. ~ 2022.09.20
+- 2022.08.04 ~ 2022.08.19
 
 ## 목적
-- **Text 기반으로 사람들의 MBTI를 분류하여 다양한 분야에 유용하게 사용.( 특히, 마케팅 분야)**  
-          
-## 코드 설명
+- ** CNN-custom, MLP-custom, Resnet50, Alexnet 모델을 사용하여 인물사진으로 Multi-label Classification model 구축**  
 
+
+## 코드 설명
    
 코드     | 코드 링크   | 
 :-------:|:-----------:|
-텍스트 전처리|[Text_Preprocess](https://github.com/AliceecilA93/MBTI-Classification-based-on-Text-with-BERT/blob/main/Text_Preprocess.ipynb)|         
-MBTI 이진분류 | [MBTI Classification (Binary)](https://github.com/AliceecilA93/MBTI-Classification-based-on-Text-with-BERT/blob/main/MBTI%20Classification%20(Binary_Kaggle).ipynb)|
-MBTI 16분류| [MBTI Classification(16)](https://github.com/AliceecilA93/MBTI-Classification-based-on-Text-with-BERT/blob/main/MBTI%20Classification(16_Kaggle).ipynb)| 
-Confusion Matrix| [MBTI Confusion Matrix](https://github.com/AliceecilA93/MBTI-Classification-based-on-Text-with-BERT/blob/main/MBTI_Confustion%20matrix.ipynb) |
-Wordcloud| [MBTI Wordcloud](https://github.com/AliceecilA93/MBTI-Classification-based-on-Text-with-BERT/blob/main/MBTI_Wordcloud.ipynb)|          
+이미지 전처리|[Image_preprocessing_portrait](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Image_preprocessing_portrait.ipynb)|       CNN-custom Model | [Convolutional Neural Networks](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Convolutional%20Neural%20Networks.ipynb)|
+MLP-custom Model| [Multi-Layer Perceptron](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Multi-Layer%20Perceptron.ipynb)| 
+Resnet50 Model| [Resnet50_hair](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Resnet50_hair.ipynb) |
+Alextnet Model| [Alexnet_gender](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Alexnet_gender.ipynb)|          
 
 
 ## 사용된 데이터  
 
-- Reddit data [final_2700.pkl](https://drive.google.com/uc?id=1--Kj5WvDiNmwzYwPp4L12LMuCqP0xqJU)
-- Personality cafe data [kaggledata.pkl](https://drive.google.com/uc?id=1NmSV5Oaa2UIrSloWEQGgNvRyBRIDYNdA)
+- AI HUB [페르소나 기반의 가상 인물 몽타주 데이터](https://aihub.or.kr/aihubdata/data/view.do?currMenu=115&topMenu=100&aihubDataSe=realm&dataSetSn=618)
+
 
 ## 사용된 모델 
 
-- BERT 
-  * Transformer의 Encoder를 활용한 Language model 
-  * Bidirectional Transformer Encoder를 가지고 있으며 대용량 Unlabled data로 모델을 미리 학습 시킨 후, 특정 task를 가지고 있는 labeled data로 학습하는 모델 
-- DistillBERT
-  * 기존 BERT model에 Distilling Knowldege 기법 적용 
-    ==> 모델 경량화 + 추론 속도 높여주는 BERT model인 DistillBERT
+- CNN-custom
+- MLP-custom
+- Resnet50
+- Alexnet
 
 
 ## 과정  
@@ -38,48 +35,134 @@ Wordcloud| [MBTI Wordcloud](https://github.com/AliceecilA93/MBTI-Classification-
  1. 개발환경 : Python, Tensorflow, Colab
  
  2. 데이터 전처리
-     - 대문자로 라벨 통일 
-     - 필요없는 열 제거 
-     - null값 제거 
-     - 중복제거 
-     - 링크제거
-     - Labeling dataset  
+ 
+ * Image preprocessing
+   - Image resize & padding
+   
+   ![image](https://user-images.githubusercontent.com/112064534/207093115-288d7ac3-84dc-4fea-94bf-2a0edebcfa62.png)
 
+   - Image Augmentation 
+   
+   ![image](https://user-images.githubusercontent.com/112064534/207093296-7fbb5183-4b5a-4601-8887-b7593115a864.png)
+
+   - Labeling
+ ```c
+def sex_label(sex):
+    if sex == 'M':
+        return 0
+    else:
+        return 1
+
+def age_label(age):
+  if 20 <= age < 30:
+    return 0
+  elif 30 <= age < 40:
+    return 1
+  elif 40 <= age < 50:
+    return 2
+  elif 50 <= age < 60:
+    return 3
+  else:
+    return 4
+
+def face_type_label(face_type):
+  if face_type == '둥근형':
+    return 0
+  elif face_type == '긴형':
+    return 1
+  elif face_type == '사각형':
+    return 2
+  elif face_type == '계란형':
+    return 3
+  elif face_type == '역삼각형':
+    return 4
+  else:
+    return 5
+  
+def hairstyle_label(hairstyle):
+  if hairstyle == '직모(생머리)':
+    return 0
+  elif hairstyle == '스포츠형':
+    return 1
+  elif hairstyle == '곱슬머리':
+    return 2
+  elif hairstyle == '웨이브형':
+    return 3
+  else:
+    return 4
+
+```  
+   - Zero-centering
+   
+   ![image](https://user-images.githubusercontent.com/112064534/207093226-72561924-cb73-4fea-894a-736d276f684b.png)
+
+ 
  3. 데이터셋
    
- 데이터셋 | 데이터 갯수 | 
- :-------:|:-----------:|
- Reddit data (16분류)| 43,200 |         
- Reddit data (이진분류) | 80,000 |       
- Personality cafe data (16분류) | 8,675 |         
- Personality cafe data (이진분류)| 8,675 |        
+  ![image](https://user-images.githubusercontent.com/112064534/207093001-df342ff2-031a-4462-ba28-1f37b4870034.png)
+    
 
 
  4. 데이터셋 분석
   
-  - Reddit data
+  * Age
   
- ![image](https://user-images.githubusercontent.com/112064534/207056926-e59eaeab-7ab6-42b9-81ea-85bb9e1f8aa7.png)
- 
-  - Personality cafe data
+   - 데이터 분포 
   
-![image](https://user-images.githubusercontent.com/112064534/207057062-fcad37af-0f87-4d72-8440-6c2966148573.png)
+  ![image](https://user-images.githubusercontent.com/112064534/207094883-49e0f7bb-951c-40c4-8d8f-0dd4b7d43134.png)
 
- ==> Reddit data의 라벨간 불균형이 심해 이를 해소하기위해서 데이터셋을 Reddit data에서 Personality cafe data로 변경하였지만 여전히 라벨간 불균형 하다는 것을 알 수 있다. 양으로 따지면 Reddit data가 훨씬 많지만 Personality cafe data의 질이 더 좋아 성능이 더 높았다. 
+  - Resnet50 시각화 
+  
+  ![image](https://user-images.githubusercontent.com/112064534/207095052-f755a9d5-180c-436c-a2a3-61cce2fff70f.png)
+
+  
+  * Gender
+   
+   - 데이터 분포 
+   
+   ![image](https://user-images.githubusercontent.com/112064534/207095259-c8b49596-d12a-445a-a725-22ff8f51e16d.png)
+
+   - Alexnet 시각화 
+   
+   ![image](https://user-images.githubusercontent.com/112064534/207095364-e7ea5dd8-2036-4b62-bbd9-f192ffb7761d.png)
+
+  
+  * Hairstyle
+  
+  - 데이터 분포 
  
+  ![image](https://user-images.githubusercontent.com/112064534/207095467-555b551e-ac5c-4c4b-b3c4-175a65dd46d6.png)
+
+  - Resnet50 시각화 
+  
+  ![image](https://user-images.githubusercontent.com/112064534/207095629-d0c71295-fc4f-4387-a480-59c033b6b59a.png)
+
+
+
  
- 5. 모델 분석 
- - Reddit dataset에서는 DistillBERT의 성능이 더 높았지만 Personality cafe dataset에서는 BERT + hidden layer 24로 Fine-tuning한 것이 높았다. 
+ 5. 성능개선 노력(Resnet50_hair) 
+ 
+ * 데이터 핸들링 
+ 
+  - 라벨 갯수 줄이기 ( 5 => 3) 
+  - 증강 ( 5,446 => 15,000)
+  - Zero-centering
+  
+ * 모델 핸들링 
+ 
+  - Model 변경 ( CNN-custom, MLP-custom, Resnet50, Alexnet) 
+  - Resnet50 모델의 개방 정도 조절 ( -10, -20) 
+  - Resnet50 모델의 Dense 조절  ( Layers , Depth) 
+  - Compile & Training ( Learning rate, Epoch, Batch size, callbacks) 
  
 
 ## 결과
-- Confusion Matrix를 확인했을 때 이진분류보다 이진분류가 수치상으로 더 높았다. 데이터의 양 균형과 질이 좋았다면 데이터 양에 치우치지 않고 더 좋은 결과가 기대된다. 수치적으로는 16분류가 더 높았으나 데이터의 불균형으로 이진분류의 결과를 고객 성향에 따른 마케팅에 활용 가능할 것 같다.  
-    
+- 인물 이미지로 Age, Gender, Hairstyle로 labeling해본 결과 최종적으로 Age는 Resnet50 Model, 
+  Gender는 Alexnet Model, Hairstyle은 Resnet50 Model이 각 라벨당 Best Model로 선정되었다. 
+  하지만 Age와 Gender는 성능이 좋은 반면 그에 비해 Hairstyle은 성능이 낮아서 Hairstyle Model의 성   능을 개선시키고자 데이터핸들링과 모델핸들링을 시도하였다. 그 결과 라벨 수를 줄이는 것보다 라벨 수   를 유지한 상태에서 데이터를 증강시키고 일부층 개방을 -10, Dense Layer는 2층보다는 한 층, Dense Layer 너비는 512보다 256으로 작게, Batch size는 50보다 125으로 넓게, Epoch수는 30보다는 15로 작게  하여 Val loss를 기준으로 callback함수를 썼을 때 성능을 0.02% 올릴 수 있었다. 모든 시도를 해봤음에도 불구하고 더 이상 수치가 올라가지 않아 Hairstyle을 구분해주기 위해서는 데이터셋을 변경하거나 다른 데이터를 넣어줘야할 것 같다. 
+  
 
 
 ## 참조
--DEVLIN, Jacob, et al. Bert: Pre-training of deep bidirectional transformers for language understanding. arXiv preprint arXiv:1810.04805, 2018.
-https://doi.org/10.48550/arXiv.1810.04805 
 
--SANH, Victor, et al. DistilBERT, a distilled version of BERT: smaller, faster, cheaper and lighter. arXiv preprint arXiv:1910.01108, 2019.
-https://doi.org/10.48550/arXiv.1910.01108 
+Krizhevsky, Alex, Ilya Sutskever, and Geoffrey E. Hinton. "Imagenet classification with deep convolutional neural networks." Communications of the ACM 60.6 (2017): 84-90.
