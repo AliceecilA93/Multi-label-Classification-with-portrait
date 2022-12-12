@@ -4,14 +4,15 @@
 - 2022.08.04 ~ 2022.08.19
 
 ## 목적
-- ** CNN-custom, MLP-custom, Resnet50, Alexnet 모델을 사용하여 인물사진으로 Multi-label Classification model 구축**  
+- **CNN-custom, MLP-custom, Resnet50, Alexnet 모델을 사용하여 인물사진으로 Multi-label Classification model 구축**  
 
 
 ## 코드 설명
    
 코드     | 코드 링크   | 
 :-------:|:-----------:|
-이미지 전처리|[Image_preprocessing_portrait](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Image_preprocessing_portrait.ipynb)|       CNN-custom Model | [Convolutional Neural Networks](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Convolutional%20Neural%20Networks.ipynb)|
+이미지 전처리|[Image_preprocessing_portrait](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Image_preprocessing_portrait.ipynb)|
+CNN-custom Model | [Convolutional Neural Networks](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Convolutional%20Neural%20Networks.ipynb)|
 MLP-custom Model| [Multi-Layer Perceptron](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Multi-Layer%20Perceptron.ipynb)| 
 Resnet50 Model| [Resnet50_hair](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Resnet50_hair.ipynb) |
 Alextnet Model| [Alexnet_gender](https://github.com/AliceecilA93/Multi-label-Classification-with-portrait/blob/main/Source%20code/Alexnet_gender.ipynb)|          
@@ -37,15 +38,16 @@ Alextnet Model| [Alexnet_gender](https://github.com/AliceecilA93/Multi-label-Cla
  2. 데이터 전처리
  
  * Image preprocessing
-   - Image resize & padding
    
-   ![image](https://user-images.githubusercontent.com/112064534/207093115-288d7ac3-84dc-4fea-94bf-2a0edebcfa62.png)
+    - Image resize & padding
+   
+     ![image](https://user-images.githubusercontent.com/112064534/207093115-288d7ac3-84dc-4fea-94bf-2a0edebcfa62.png)
 
-   - Image Augmentation 
+    - Image Augmentation 
    
    ![image](https://user-images.githubusercontent.com/112064534/207093296-7fbb5183-4b5a-4601-8887-b7593115a864.png)
 
-   - Labeling
+    - Labeling
  ```c
 def sex_label(sex):
     if sex == 'M':
@@ -78,7 +80,7 @@ def face_type_label(face_type):
     return 4
   else:
     return 5
-  
+    
 def hairstyle_label(hairstyle):
   if hairstyle == '직모(생머리)':
     return 0
@@ -92,6 +94,7 @@ def hairstyle_label(hairstyle):
     return 4
 
 ```  
+    
    - Zero-centering
    
    ![image](https://user-images.githubusercontent.com/112064534/207093226-72561924-cb73-4fea-894a-736d276f684b.png)
@@ -105,18 +108,18 @@ def hairstyle_label(hairstyle):
 
  4. 데이터셋 분석
   
-  * Age
+ * Age
   
    - 데이터 분포 
   
   ![image](https://user-images.githubusercontent.com/112064534/207094883-49e0f7bb-951c-40c4-8d8f-0dd4b7d43134.png)
 
-  - Resnet50 시각화 
+   - Resnet50 시각화 
   
   ![image](https://user-images.githubusercontent.com/112064534/207095052-f755a9d5-180c-436c-a2a3-61cce2fff70f.png)
 
   
-  * Gender
+ * Gender
    
    - 데이터 분포 
    
@@ -127,7 +130,7 @@ def hairstyle_label(hairstyle):
    ![image](https://user-images.githubusercontent.com/112064534/207095364-e7ea5dd8-2036-4b62-bbd9-f192ffb7761d.png)
 
   
-  * Hairstyle
+* Hairstyle
   
   - 데이터 분포 
  
@@ -144,16 +147,16 @@ def hairstyle_label(hairstyle):
  
  * 데이터 핸들링 
  
-  - 라벨 갯수 줄이기 ( 5 => 3) 
-  - 증강 ( 5,446 => 15,000)
-  - Zero-centering
+   - 라벨 갯수 줄이기 ( 5 => 3) 
+   - 증강 ( 5,446 => 15,000)
+   - Zero-centering
   
  * 모델 핸들링 
  
-  - Model 변경 ( CNN-custom, MLP-custom, Resnet50, Alexnet) 
-  - Resnet50 모델의 개방 정도 조절 ( -10, -20) 
-  - Resnet50 모델의 Dense 조절  ( Layers , Depth) 
-  - Compile & Training ( Learning rate, Epoch, Batch size, callbacks) 
+   - Model 변경 ( CNN-custom, MLP-custom, Resnet50, Alexnet) 
+   - Resnet50 모델의 개방 정도 조절 ( -10, -20) 
+   - Resnet50 모델의 Dense 조절  ( Layers , Depth) 
+   - Compile & Training ( Learning rate, Epoch, Batch size, callbacks) 
  
 
 ## 결과
